@@ -17,6 +17,7 @@ public class loginn extends javax.swing.JFrame {
     public JFrame frame;
     Connection connection = null;
     static int f=0;
+    int co=0;
     /**
      * Creates new form loginn
      */
@@ -139,10 +140,13 @@ public class loginn extends javax.swing.JFrame {
             pst.setString(2, passwordField.getText());
           
             ResultSet rs = pst.executeQuery();
+            
+            
             int count=0;
             while(rs.next()){
                 count=count+1;
             }
+            
             if(count==1)
             {
                 JOptionPane.showMessageDialog(null, "Username and password is correct");
@@ -172,7 +176,14 @@ public class loginn extends javax.swing.JFrame {
 
     private void registActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registActionPerformed
         try{
-            String query="insert into employeedata(username,password,userid) values('"+textFieldUN.getText()+"','"+passwordField.getText()+"',"+6+")";
+            String queryy="select * from employeedata";
+            PreparedStatement pstt=connection.prepareStatement(queryy);
+            ResultSet rss = pstt.executeQuery();
+            while(rss.next()){
+                co=co+1;
+            }
+            System.out.println(co);
+            String query="insert into employeedata(username,password,userid) values('"+textFieldUN.getText()+"','"+passwordField.getText()+"',"+co+1+")";
         Statement st= connection.createStatement();
         st.executeUpdate(query);
         textFieldUN.setText(null);
